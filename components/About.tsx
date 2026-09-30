@@ -11,7 +11,7 @@ import { site } from "@/lib/site";
 const FACTS = [
   { label: "Idade", value: "19 anos" },
   { label: "Atuação", value: "Desenvolvedor Web" },
-  { label: "Formação", value: "Engenharia da Computação" },
+  { label: "Estuda", value: "Engenharia da Computação" },
   { label: "Base", value: site.location },
 ];
 
