@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #080808;
+  --color-ink-raised: #0d0d0d;
+  --color-ink-line: #1c1c1c;
+  --color-bone: #f2f1ed;
+  --color-bone-dim: #9f9f99;
+  --color-bone-faint: #85857d;
+  --color-accent: #cdff4a;
+  --color-accent-dim: #9cc42f;
+
+  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Menlo", monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-pulse-dot: pulse-dot 2.4s ease-in-out infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      opacity: 1;
+      box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-accent) 55%, transparent);
+    }
+    50% {
+      opacity: 0.6;
+      box-shadow: 0 0 0 6px color-mix(in oklab, var(--color-accent) 0%, transparent);
+    }
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--color-ink-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Compensa o header fixo ao navegar por âncoras. */
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+
+  select option {
+    background-color: #0d0d0d;
+    color: #f2f1ed;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+@utility display-xl {
+  font-size: clamp(2.5rem, 7.2vw, 6.75rem);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  font-weight: 500;
+}
+
+@utility display-lg {
+  font-size: clamp(2.25rem, 6.2vw, 5.25rem);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  font-weight: 500;
+}
+
+@utility display-md {
+  font-size: clamp(1.75rem, 3.8vw, 3rem);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+}
+
+@utility eyebrow {
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@utility shell {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 88rem;
+  padding-inline: 1.25rem;
+
+  @media (width >= 48rem) {
+    padding-inline: 2.5rem;
+  }
+
+  @media (width >= 80rem) {
+    padding-inline: 4rem;
+  }
+}
+
+/* Faint technical grid used as a section backdrop. */
+@utility grid-backdrop {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, #ffffff 4%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, #ffffff 4%, transparent) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+@utility text-gradient-bone {
+  background: linear-gradient(180deg, #ffffff 0%, #b9b9b2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.noise-overlay::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Hide the native pointer only when the custom cursor is actually running. */
+body[data-custom-cursor="on"],
+body[data-custom-cursor="on"] a,
+body[data-custom-cursor="on"] button,
+body[data-custom-cursor="on"] [role="button"] {
+  cursor: none;
+}
